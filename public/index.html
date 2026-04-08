@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Solar Tracker Dashboard</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#111827;
+color:white;
+text-align:center;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+padding:30px;
+}
+
+.card{
+background:#1f2937;
+padding:20px;
+border-radius:10px;
+font-size:22px;
+}
+
+.value{
+font-size:32px;
+color:#22c55e;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Solar Tracker Dashboard</h1>
+
+<div class="container">
+
+<div class="card">
+Sun X
+<div id="sunX" class="value">0</div>
+</div>
+
+<div class="card">
+Sun Y
+<div id="sunY" class="value">0</div>
+</div>
+
+<div class="card">
+Panel X
+<div id="panelX" class="value">0</div>
+</div>
+
+<div class="card">
+Panel Y
+<div id="panelY" class="value">0</div>
+</div>
+
+<div class="card">
+Error X
+<div id="errorX" class="value">0</div>
+</div>
+
+<div class="card">
+Error Y
+<div id="errorY" class="value">0</div>
+</div>
+
+</div>
+
+<script>
+
+async function update(){
+
+let res = await fetch("/data");
+let d = await res.json();
+
+document.getElementById("sunX").innerText=d.sunX;
+document.getElementById("sunY").innerText=d.sunY;
+document.getElementById("panelX").innerText=d.panelX;
+document.getElementById("panelY").innerText=d.panelY;
+document.getElementById("errorX").innerText=d.errorX;
+document.getElementById("errorY").innerText=d.errorY;
+
+}
+
+setInterval(update,1000);
+
+</script>
+
+</body>
+</html>

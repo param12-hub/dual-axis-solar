@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.static("public"));
 
-let data = {
+let data={
 sunX:0,
 sunY:0,
 panelX:0,
@@ -12,9 +12,11 @@ errorX:0,
 errorY:0
 };
 
-/* ESP32 SEND DATA HERE */
+let command="stop";
 
-app.get("/update", (req,res)=>{
+/* UPDATE DATA FROM ESP32 */
+
+app.get("/update",(req,res)=>{
 
 data.sunX=req.query.sunX;
 data.sunY=req.query.sunY;
@@ -27,10 +29,25 @@ res.send("OK");
 
 });
 
-/* DASHBOARD READS DATA */
+/* DASHBOARD DATA */
 
 app.get("/data",(req,res)=>{
 res.json(data);
+});
+
+/* COMMAND FROM DASHBOARD */
+
+app.get("/cmd",(req,res)=>{
+
+command=req.query.move;
+res.send("command set");
+
+});
+
+/* ESP32 READ COMMAND */
+
+app.get("/getcmd",(req,res)=>{
+res.send(command);
 });
 
 const PORT=process.env.PORT || 3000;

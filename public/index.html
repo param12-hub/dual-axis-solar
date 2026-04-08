@@ -1,5 +1,8 @@
+
+
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <title>Solar Tracker Dashboard</title>
@@ -8,7 +11,7 @@
 
 body{
 font-family:Arial;
-background:#111827;
+background:#0f172a;
 color:white;
 text-align:center;
 }
@@ -17,11 +20,11 @@ text-align:center;
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
-padding:30px;
+padding:20px;
 }
 
 .card{
-background:#1f2937;
+background:#1e293b;
 padding:20px;
 border-radius:10px;
 font-size:22px;
@@ -29,7 +32,18 @@ font-size:22px;
 
 .value{
 font-size:32px;
-color:#22c55e;
+color:#38bdf8;
+}
+
+button{
+padding:15px 25px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#22c55e;
+color:white;
+cursor:pointer;
 }
 
 </style>
@@ -38,7 +52,7 @@ color:#22c55e;
 
 <body>
 
-<h1>Solar Tracker Dashboard</h1>
+h1>Solar Tracker Dashboard</h1>
   <h2>Major Project by Bethi Nikhil(b200457) & T.Nagasri(b201402)</h2>
 
 <div class="container">
@@ -75,6 +89,16 @@ Error Y
 
 </div>
 
+<h2>Manual Control</h2>
+
+<button onclick="sendCmd('left')">⬅ LEFT</button>
+<button onclick="sendCmd('right')">RIGHT ➡</button>
+
+<br>
+
+<button onclick="sendCmd('up')">⬆ UP</button>
+<button onclick="sendCmd('down')">⬇ DOWN</button>
+
 <script>
 
 async function update(){
@@ -91,9 +115,16 @@ document.getElementById("errorY").innerText=d.errorY;
 
 }
 
+async function sendCmd(cmd){
+
+await fetch("/cmd?move="+cmd);
+
+}
+
 setInterval(update,1000);
 
 </script>
 
 </body>
+
 </html>
